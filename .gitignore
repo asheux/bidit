@@ -1,0 +1,9 @@
+# Virtual Environment
+venv/
+
+# Environment Files
+.env
+
+# Vim Files
+*.swp
+*.swo
