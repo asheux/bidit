@@ -7,3 +7,9 @@ venv/
 # Vim Files
 *.swp
 *.swo
+
+# Python files
+*.pyc
+
+# Database Migrations
+migrations/
