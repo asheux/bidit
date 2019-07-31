@@ -38,7 +38,10 @@ INSTALLED_APPS = [
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'graphene_django',
+        'apps.users',
         ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
         'config.middleware.filter_hosts_middleware.FilterHostsMiddleware',
@@ -50,6 +53,13 @@ MIDDLEWARE = [
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         ]
+
+GRAPHENE = {
+        'SCHEMA': 'config.schema.schema',
+        'MIDDLEWARE': [
+            'graphql_jwt.middleware.JSONWebTokenMiddleware',
+            ],
+        }
 
 ROOT_URLCONF = 'config.urls'
 
@@ -70,10 +80,6 @@ TEMPLATES = [
         ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-GRAPHENE = {
-        'SCHEMA': 'django_root.schema.schema'
-        }
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -110,6 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
         {
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
             },
+        ]
+
+# Authention BAckends
+
+AUTHENTICATION_BACKENDS = [
+        'graphql_jwt.backends.JSONWebTokenBackend',
+        'django.contrib.auth.backends.ModelBackend',
         ]
 
 

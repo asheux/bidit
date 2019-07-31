@@ -13,3 +13,4 @@ venv/
 
 # Database Migrations
 migrations/
+db.sqlite3
