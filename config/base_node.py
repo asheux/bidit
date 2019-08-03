@@ -13,6 +13,5 @@ class BiditNode(Node):
     @staticmethod
     def get_node_from_global_id(info, global_id, only_type=None):
         if only_type:
-            model = only_type._meta.model
-        return model.objects.get(id=global_id)
+            return only_type._meta.model.objects.get(pk=global_id)
 

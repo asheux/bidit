@@ -46,32 +46,33 @@ mutation {
 firstName: "Brian",
 lastName: "Mboya",
 email: "mboya9@gmail.com",
-password: "mermaid",
-}) {
+password: "mermaid"}) {
         user {
             id,
-                firstName,
-                lastName,
+            firstName,
+            lastName,
+            email,
+        }
+    }
+}
+```
+
+## Login user
+
+- Request query
+
+```
+mutation {
+    loginUser(email: "paxtonmboya@gmail.com", password: "darling") {
+        token,
+            user {
+                id,
                 email,
-        }
-    }
-}
-```
-
-- Reaponse Data
-
-```
-{
-    "data": {
-        "createUser": {
-            "user": {
-                "id": "30",
-                    "firstName": "Brian",
-                    "lastName": "Mboya",
-                    "email": "mboya9@gmail.com"
+                firstName,
+                lastName
             }
-        }
     }
 }
+
 ```
 

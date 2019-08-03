@@ -1,10 +1,12 @@
 import graphene
+import graphql_jwt
 from django.core.validators import validate_email
 from graphql import GraphQLError
 from .schema import UserNode
 from .models import User
 
-class CreateUser(graphene.relay.ClientIDMutation):
+
+class RegisterUser(graphene.relay.ClientIDMutation):
     user = graphene.Field(UserNode)
 
     class Input:
@@ -13,7 +15,8 @@ class CreateUser(graphene.relay.ClientIDMutation):
         email = graphene.String()
         password = graphene.String()
 
-    def mutate_and_get_payload(root, info, **kwargs):
+    @classmethod
+    def mutate_and_get_payload(cls, root, info, **kwargs):
         if not kwargs.get('email'):
             raise GraphQLError('Users must have an email address')
         if kwargs.get('email'):
@@ -26,7 +29,23 @@ class CreateUser(graphene.relay.ClientIDMutation):
             user = User.objects.create_user(**kwargs)
             user.save()
 
-        return CreateUser(user=user)
+        return cls(user=user)
 
-class Mutation(graphene.AbstractType):
-    create_user = CreateUser.Field()
+
+class LoginUser(graphql_jwt.JSONWebTokenMutation):
+    user = graphene.Field(UserNode)
+
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        user = info.context.user
+        if user:
+            return cls(user=user)
+
+
+class RegisterMutation(graphene.AbstractType):
+    create_user = RegisterUser.Field()
+
+
+class LoginMutation(graphene.AbstractType):
+    login_user = LoginUser.Field()
+
