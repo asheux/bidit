@@ -1,8 +1,13 @@
 import graphene
 import graphql_jwt
 from apps.users.schema import UserQuery
-from apps.users.mutations import RegisterMutation
-from apps.users.mutations import LoginMutation, LoginUser
+from apps.users.mutations import (
+        LoginMutation,
+        LoginUser, 
+        SocialAuthMutation,
+        SocialAuth,
+        RegisterMutation
+        ) 
 
 
 class Query(UserQuery, graphene.ObjectType):
@@ -13,9 +18,11 @@ class Query(UserQuery, graphene.ObjectType):
 class Mutation(
         RegisterMutation,
         LoginMutation,
+        SocialAuthMutation,
         graphene.ObjectType
         ):
     login_user = LoginUser()
+    social_auth = SocialAuth()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 

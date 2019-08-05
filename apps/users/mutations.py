@@ -1,9 +1,11 @@
 import graphene
+from graphql_social_auth.relay.mutations import SocialAuthMutation
 import graphql_jwt
 from django.core.validators import validate_email
 from graphql import GraphQLError
 from .schema import UserNode
 from .models import User
+import pdb
 
 
 class RegisterUser(graphene.relay.ClientIDMutation):
@@ -42,10 +44,22 @@ class LoginUser(graphql_jwt.JSONWebTokenMutation):
             return cls(user=user)
 
 
+class SocialAuth(SocialAuthMutation):
+    user = graphene.Field(UserNode)
+
+    @classmethod
+    def resolve(cls, root, info, social, **kwargs):
+        pdb.set_trace()
+
+
 class RegisterMutation(graphene.AbstractType):
     create_user = RegisterUser.Field()
 
 
 class LoginMutation(graphene.AbstractType):
     login_user = LoginUser.Field()
+
+
+class SocialAuthMutation(graphene.AbstractType):
+    social_auth = SocialAuth.Field()
 

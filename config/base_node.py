@@ -1,10 +1,11 @@
 from graphene.relay import Node
 from graphql_relay import from_global_id
 
+
 class BiditNode(Node):
 
     class Meta:
-        name = 'Node'
+        name = 'MyNode'
 
     @staticmethod
     def to_global_id(type, id):

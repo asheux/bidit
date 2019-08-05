@@ -38,6 +38,7 @@ INSTALLED_APPS = [
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'graphene_django',
+        'social_django',
         'apps.users',
         ]
 
@@ -52,6 +53,7 @@ MIDDLEWARE = [
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'social_django.middleware.SocialAuthExceptionMiddleware',
         ]
 
 GRAPHENE = {
@@ -60,6 +62,24 @@ GRAPHENE = {
             'graphql_jwt.middleware.JSONWebTokenMiddleware',
             ],
         }
+
+# Social Auth
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+# SOCIAL_AUTH_USER_MODEL = 'users.User'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY', default='')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET', default='')
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', default='')
+
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', default='')
+
+SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY', default='')
+
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET', default='')
 
 ROOT_URLCONF = 'config.urls'
 
@@ -123,6 +143,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
         'graphql_jwt.backends.JSONWebTokenBackend',
         'django.contrib.auth.backends.ModelBackend',
+        'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.twitter.TwitterOAuth',
+        'social_core.backends.facebook.FacebookOAuth2',
         ]
 
 
