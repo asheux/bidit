@@ -4,8 +4,8 @@ from apps.users.schema import UserQuery
 from apps.users.mutations import (
         LoginMutation,
         LoginUser, 
-        SocialAuthMutation,
-        SocialAuth,
+#         SocialAuthMutation,
+#         SocialAuth,
         RegisterMutation
         ) 
 
@@ -18,11 +18,11 @@ class Query(UserQuery, graphene.ObjectType):
 class Mutation(
         RegisterMutation,
         LoginMutation,
-        SocialAuthMutation,
+#         SocialAuthMutation,
         graphene.ObjectType
         ):
     login_user = LoginUser()
-    social_auth = SocialAuth()
+#     social_auth = SocialAuth()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 
