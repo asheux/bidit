@@ -5,7 +5,15 @@ from .models import User
 # Register your models here.
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_superuser')
+    list_display = (
+            'email',
+            'first_name',
+            'last_name',
+            'is_active',
+            'is_superuser',
+            'phone_number',
+            'credit_card',
+            )
     list_filter = ('is_superuser',)
     ordering = ('email',)
 

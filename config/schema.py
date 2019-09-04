@@ -1,28 +1,27 @@
+"""Imports"""
+
 import graphene
 import graphql_jwt
 from apps.users.schema import UserQuery
+from apps.items.mutations import ItemMutation
 from apps.users.mutations import (
         LoginMutation,
-        LoginUser, 
-#         SocialAuthMutation,
-#         SocialAuth,
+        LoginUser,
         RegisterMutation
-        ) 
+        )
 
 
 class Query(UserQuery, graphene.ObjectType):
-    # This class will inherit from multiple Queries
-    # as we begin to add more apps to our project
-    pass
+    """
+    This class will inherit from multiple Queries
+    as we begin to add more apps to our project
+    """
 
-class Mutation(
-        RegisterMutation,
-        LoginMutation,
-#         SocialAuthMutation,
-        graphene.ObjectType
-        ):
+class Mutation(RegisterMutation, LoginMutation, ItemMutation, graphene.ObjectType):
+    """
+    Base mutations
+    """
     login_user = LoginUser()
-#     social_auth = SocialAuth()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 

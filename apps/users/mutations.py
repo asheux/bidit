@@ -1,14 +1,15 @@
+"""Imports"""
+
 import graphene
-from graphql_social_auth.relay import SocialAuthJWT
 import graphql_jwt
 from django.core.validators import validate_email
 from graphql import GraphQLError
 from .schema import UserNode
 from .models import User
-import pdb
 
 
 class RegisterUser(graphene.relay.ClientIDMutation):
+    """Add user"""
     user = graphene.Field(UserNode)
 
     class Input:
@@ -19,6 +20,9 @@ class RegisterUser(graphene.relay.ClientIDMutation):
 
     @classmethod
     def mutate_and_get_payload(cls, root, info, **kwargs):
+        """
+        change database by adding new user
+        """
         if not kwargs.get('email'):
             raise GraphQLError('Users must have an email address')
         if kwargs.get('email'):
@@ -35,31 +39,21 @@ class RegisterUser(graphene.relay.ClientIDMutation):
 
 
 class LoginUser(graphql_jwt.JSONWebTokenMutation):
+    """Login user"""
     user = graphene.Field(UserNode)
 
     @classmethod
     def resolve(cls, root, info, **kwargs):
+        """user resolver"""
         user = info.context.user
-        if user:
-            return cls(user=user)
-
-
-# class SocialAuth(SocialAuthJWT):
-#     user = graphene.Field(UserNode)
-
-#     @classmethod
-#     def resolve(cls, root, info, social, **kwargs):
-#         pdb.set_trace()
-
+        return cls(user=user)
 
 class RegisterMutation(graphene.AbstractType):
+    """register mutation"""
     create_user = RegisterUser.Field()
 
 
 class LoginMutation(graphene.AbstractType):
+    """Login mutation"""
     login_user = LoginUser.Field()
-
-
-# class SocialAuthMutation(graphene.AbstractType):
-#     social_auth = SocialAuth.Field()
 

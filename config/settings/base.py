@@ -40,6 +40,7 @@ INSTALLED_APPS = [
         'graphene_django',
         'social_django',
         'apps.users',
+        'apps.items',
         ]
 
 AUTH_USER_MODEL = 'users.User'

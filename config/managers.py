@@ -1,6 +1,10 @@
+"""Imports"""
+
 from django.contrib.auth.models import BaseUserManager
+from django.db import models
 
 class UserManager(BaseUserManager):
+    """User manager"""
 
     def create_user(self, email, password=None, **kwargs):
         """
@@ -24,8 +28,28 @@ class UserManager(BaseUserManager):
         kwargs.setdefault('is_admin', True)
 
         if kwargs.get('is_superuser') is not True:
-            return valueError('Supueruser must have an is_superuser set to True')
-        self.create_user(email, password, **kwargs)
+            return ValueError('Supueruser must have an is_superuser set to True')
+        return self.create_user(email, password, **kwargs)
 
-        return user
+
+class ItemManager(models.Manager):
+    """
+    Item manager
+    """
+    def create_item(self, owner, **kwargs):
+        """ Creates a new item """
+
+        if not owner:
+            return ValueError("You must be a user to create an item")
+
+        item = self.model(owner, **kwargs)
+        item.save(self._db)
+
+        return item
+
+
+
+
+
+
 
