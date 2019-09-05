@@ -32,23 +32,6 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **kwargs)
 
 
-class ItemManager(models.Manager):
-    """
-    Item manager
-    """
-    def create_item(self, owner, **kwargs):
-        """ Creates a new item """
-
-        if not owner:
-            return ValueError("You must be a user to create an item")
-
-        item = self.model(owner, **kwargs)
-        item.save(self._db)
-
-        return item
-
-
-
 
 
 

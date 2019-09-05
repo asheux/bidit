@@ -3,8 +3,6 @@
 from django.db import models
 from django.conf import settings
 
-from config.managers import ItemManager
-
 # Create your models here.
 
 class Item(models.Model):
@@ -17,5 +15,3 @@ class Item(models.Model):
     description = models.CharField(max_length=500)
     reserve_price = models.IntegerField()
     photo = models.CharField(max_length=10, default="Photo here") # TODO
-
-    objects = ItemManager()

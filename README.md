@@ -76,3 +76,63 @@ mutation {
 
 ```
 
+## Add item
+
+- Request query
+
+```
+mutation {
+    createItem(input: {
+title: "The bomb",
+description: "This is an example of an item",
+reservePrice: 1399,
+photo: "this",
+}) {
+        item {
+            id,
+                title,
+                description,
+                reservePrice,
+                photo
+        }
+    }
+}
+```
+
+## Get all items
+
+```
+query {
+    items {
+        edges {
+            node {
+                id,
+                    title,
+                    description,
+                    reservePrice,
+                    photo,
+                    owner {
+                        firstName,
+                        lastName,
+                        email,
+                        phoneNumber
+                    }
+            }
+        }
+    }
+}
+```
+
+## Get a single item
+
+```
+query {
+    item(id: "2") {
+        title,
+            description,
+            reservePrice,
+            photo
+    }
+}
+```
+

@@ -28,7 +28,7 @@ class AddItem(relay.ClientIDMutation):
         if user.is_anonymous:
             return GraphQLError("You must login to add item")
 
-        item = Item.objects.create_item(owner=user, **kwargs)
+        item = Item(owner=user, **kwargs)
         item.save()
 
         return cls(item=item)

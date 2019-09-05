@@ -9,12 +9,23 @@ from config.base_node import BiditNode
 from .models import Item as ItemModel
 from apps.users.schema import UserNode
 
+class ItemFilter(FilterSet):
+    model = ItemModel
+    filter_fields = ('title', 'description')
+
 class ItemNode(DjangoObjectType):
     """
     Creates item node interface using base node
     """
-    owner = graphene.Field(UserNode)
-
     class Meta:
         model = ItemModel
         interfaces = (BiditNode, )
+
+
+class ItemQuery(graphene.AbstractType):
+    """
+    Creates the item query schema
+    """
+
+    item = BiditNode.Field(ItemNode)
+    items = DjangoFilterConnectionField(ItemNode, filterset_class=ItemFilter)

@@ -3,6 +3,7 @@
 import graphene
 import graphql_jwt
 from apps.users.schema import UserQuery
+from apps.items.schema import ItemQuery
 from apps.items.mutations import ItemMutation
 from apps.users.mutations import (
         LoginMutation,
@@ -11,7 +12,7 @@ from apps.users.mutations import (
         )
 
 
-class Query(UserQuery, graphene.ObjectType):
+class Query(UserQuery, ItemQuery, graphene.ObjectType):
     """
     This class will inherit from multiple Queries
     as we begin to add more apps to our project
